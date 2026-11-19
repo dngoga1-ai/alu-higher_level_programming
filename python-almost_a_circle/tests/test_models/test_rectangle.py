@@ -253,7 +253,6 @@ class TestRectangle(unittest.TestCase):
         r.to_dictionary()["width"] = 50
         self.assertEqual(r.width, 1)
 
-
     def test_valid_constructor_cases(self):
         """Valid ways of creating a Rectangle."""
         self.assertEqual(Rectangle(1, 2).width, 1)

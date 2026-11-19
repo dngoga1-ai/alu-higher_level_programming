@@ -216,7 +216,6 @@ class TestBase(unittest.TestCase):
         Rectangle.save_to_file([])
         self.assertEqual(Rectangle.load_from_file(), [])
 
-
     def test_square_save_to_file_none(self):
         """Square.save_to_file(None) saves an empty list."""
         Square.save_to_file(None)

@@ -192,7 +192,6 @@ class TestSquare(unittest.TestCase):
         self.assertEqual(str(s1), str(s2))
         self.assertNotEqual(s1, s2)
 
-
     def test_constructor_cases(self):
         """Valid and invalid ways of creating a Square."""
         self.assertEqual(Square(1).size, 1)
