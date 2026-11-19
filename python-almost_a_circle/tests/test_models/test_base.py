@@ -217,5 +217,35 @@ class TestBase(unittest.TestCase):
         self.assertEqual(Rectangle.load_from_file(), [])
 
 
+    def test_square_save_to_file_none(self):
+        """Square.save_to_file(None) saves an empty list."""
+        Square.save_to_file(None)
+        with open("Square.json", "r") as f:
+            self.assertEqual(f.read(), "[]")
+
+    def test_square_save_to_file_square(self):
+        """Square.save_to_file([Square(1)]) saves one square."""
+        Square.save_to_file([Square(1)])
+        with open("Square.json", "r") as f:
+            data = Base.from_json_string(f.read())
+        self.assertEqual(len(data), 1)
+        self.assertEqual(data[0]["size"], 1)
+
+    def test_rectangle_save_to_file_rectangle(self):
+        """Rectangle.save_to_file([Rectangle(1, 2)]) saves one rectangle."""
+        Rectangle.save_to_file([Rectangle(1, 2)])
+        with open("Rectangle.json", "r") as f:
+            data = Base.from_json_string(f.read())
+        self.assertEqual(len(data), 1)
+        self.assertEqual(data[0]["width"], 1)
+
+    def test_base_exact_cases(self):
+        """The basic examples of Base."""
+        self.assertEqual(Base.to_json_string([{'id': 12}]), '[{"id": 12}]')
+        self.assertEqual(Base.from_json_string("[]"), [])
+        self.assertEqual(Base.from_json_string('[{ "id": 89 }]'),
+                         [{"id": 89}])
+
+
 if __name__ == "__main__":
     unittest.main()

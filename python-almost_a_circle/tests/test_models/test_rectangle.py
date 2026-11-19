@@ -254,5 +254,75 @@ class TestRectangle(unittest.TestCase):
         self.assertEqual(r.width, 1)
 
 
+    def test_valid_constructor_cases(self):
+        """Valid ways of creating a Rectangle."""
+        self.assertEqual(Rectangle(1, 2).width, 1)
+        self.assertEqual(Rectangle(1, 2, 3).x, 3)
+        self.assertEqual(Rectangle(1, 2, 3, 4).y, 4)
+        self.assertEqual(Rectangle(1, 2, 3, 4, 5).id, 5)
+
+    def test_type_error_constructor_cases(self):
+        """Invalid types when creating a Rectangle."""
+        with self.assertRaises(TypeError):
+            Rectangle("1", 2)
+        with self.assertRaises(TypeError):
+            Rectangle(1, "2")
+        with self.assertRaises(TypeError):
+            Rectangle(1, 2, "3")
+        with self.assertRaises(TypeError):
+            Rectangle(1, 2, 3, "4")
+
+    def test_value_error_constructor_cases(self):
+        """Invalid values when creating a Rectangle."""
+        with self.assertRaises(ValueError):
+            Rectangle(-1, 2)
+        with self.assertRaises(ValueError):
+            Rectangle(1, -2)
+        with self.assertRaises(ValueError):
+            Rectangle(0, 2)
+        with self.assertRaises(ValueError):
+            Rectangle(1, 0)
+        with self.assertRaises(ValueError):
+            Rectangle(1, 2, -3)
+        with self.assertRaises(ValueError):
+            Rectangle(1, 2, 3, -4)
+
+    def test_update_kwargs_progressive(self):
+        """Update with a growing dictionary of attributes."""
+        r = Rectangle(10, 10, 10, 10)
+        r.update(**{'id': 89})
+        r.update(**{'id': 89, 'width': 1})
+        r.update(**{'id': 89, 'width': 1, 'height': 2})
+        r.update(**{'id': 89, 'width': 1, 'height': 2, 'x': 3})
+        r.update(**{'id': 89, 'width': 1, 'height': 2, 'x': 3, 'y': 4})
+        self.assertEqual(str(r), "[Rectangle] (89) 3/4 - 1/2")
+
+    def test_create_progressive(self):
+        """Create with a growing dictionary of attributes."""
+        r = Rectangle.create(**{'id': 89})
+        self.assertEqual(r.id, 89)
+        r = Rectangle.create(**{'id': 89, 'width': 1})
+        self.assertEqual(r.width, 1)
+        r = Rectangle.create(**{'id': 89, 'width': 1, 'height': 2})
+        self.assertEqual(r.height, 2)
+        r = Rectangle.create(**{'id': 89, 'width': 1, 'height': 2, 'x': 3})
+        self.assertEqual(r.x, 3)
+        r = Rectangle.create(**{'id': 89, 'width': 1, 'height': 2,
+                                'x': 3, 'y': 4})
+        self.assertEqual(str(r), "[Rectangle] (89) 3/4 - 1/2")
+
+    def test_update_args_progressive(self):
+        """Update with a growing list of arguments."""
+        r = Rectangle(10, 10, 10, 10)
+        r.update(89, 1)
+        self.assertEqual(r.width, 1)
+        r.update(89, 1, 2)
+        self.assertEqual(r.height, 2)
+        r.update(89, 1, 2, 3)
+        self.assertEqual(r.x, 3)
+        r.update(89, 1, 2, 3, 4)
+        self.assertEqual(r.y, 4)
+
+
 if __name__ == "__main__":
     unittest.main()

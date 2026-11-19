@@ -193,5 +193,55 @@ class TestSquare(unittest.TestCase):
         self.assertNotEqual(s1, s2)
 
 
+    def test_constructor_cases(self):
+        """Valid and invalid ways of creating a Square."""
+        self.assertEqual(Square(1).size, 1)
+        self.assertEqual(Square(1, 2).x, 2)
+        self.assertEqual(Square(1, 2, 3).y, 3)
+        self.assertEqual(Square(1, 2, 3, 4).id, 4)
+        with self.assertRaises(TypeError):
+            Square("1")
+        with self.assertRaises(TypeError):
+            Square(1, "2")
+        with self.assertRaises(TypeError):
+            Square(1, 2, "3")
+        with self.assertRaises(ValueError):
+            Square(-1)
+        with self.assertRaises(ValueError):
+            Square(1, -2)
+        with self.assertRaises(ValueError):
+            Square(1, 2, -3)
+        with self.assertRaises(ValueError):
+            Square(0)
+
+    def test_update_kwargs_progressive(self):
+        """Update with a growing dictionary of attributes."""
+        s = Square(5)
+        s.update(**{'id': 89})
+        s.update(**{'id': 89, 'size': 1})
+        s.update(**{'id': 89, 'size': 1, 'x': 2})
+        s.update(**{'id': 89, 'size': 1, 'x': 2, 'y': 3})
+        self.assertEqual(str(s), "[Square] (89) 2/3 - 1")
+
+    def test_create_progressive(self):
+        """Create with a growing dictionary of attributes."""
+        s = Square.create(**{'id': 89})
+        self.assertEqual(s.id, 89)
+        s = Square.create(**{'id': 89, 'size': 1})
+        self.assertEqual(s.size, 1)
+        s = Square.create(**{'id': 89, 'size': 1, 'x': 2})
+        self.assertEqual(s.x, 2)
+        s = Square.create(**{'id': 89, 'size': 1, 'x': 2, 'y': 3})
+        self.assertEqual(str(s), "[Square] (89) 2/3 - 1")
+
+    def test_update_args_progressive(self):
+        """Update with a growing list of arguments."""
+        s = Square(5)
+        s.update(89)
+        s.update(89, 1)
+        s.update(89, 1, 2)
+        self.assertEqual(str(s), "[Square] (89) 2/0 - 1")
+
+
 if __name__ == "__main__":
     unittest.main()
