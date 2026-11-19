@@ -1,0 +1,57 @@
+The ``5-text_indentation`` module
+=================================
+
+>>> text_indentation = __import__('5-text_indentation').text_indentation
+
+Text ending without a delimiter (no trailing newline is printed):
+
+>>> text_indentation("Hello. How are you? Fine: thanks")  # doctest: +NORMALIZE_WHITESPACE
+Hello.
+<BLANKLINE>
+How are you?
+<BLANKLINE>
+Fine:
+<BLANKLINE>
+thanks
+
+Text ending with a delimiter:
+
+>>> text_indentation("Hello.")
+Hello.
+<BLANKLINE>
+
+Spaces around lines are removed:
+
+>>> text_indentation("  Hi  .   Bye  ")  # doctest: +NORMALIZE_WHITESPACE
+Hi  .
+<BLANKLINE>
+Bye
+
+Text without delimiters:
+
+>>> text_indentation("No delimiter here")  # doctest: +NORMALIZE_WHITESPACE
+No delimiter here
+
+Empty text prints nothing:
+
+>>> text_indentation("")
+
+Invalid types:
+
+>>> text_indentation(5)
+Traceback (most recent call last):
+TypeError: text must be a string
+
+>>> text_indentation(None)
+Traceback (most recent call last):
+TypeError: text must be a string
+
+>>> text_indentation(["a."])
+Traceback (most recent call last):
+TypeError: text must be a string
+
+Missing argument:
+
+>>> text_indentation()
+Traceback (most recent call last):
+TypeError: text_indentation() missing 1 required positional argument: 'text'
